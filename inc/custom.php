@@ -202,7 +202,7 @@ function eas_forum_post($the_post = 0, $edit = false) {
             	 	<span class="subject"><?php the_title(); ?></span>
             	 </h5>
             	 <?php eas_forum_meta(); ?>
-              	 <? /* php eas_feature_button(); */ ?>
+              	 <?  php eas_feature_button();  /* CORG COMMENTED */ ?> 
               	 <?php echo '| &nbsp; ' ?>
               	 <?php eas_comment_button(true, true); ?>
             <?php if (!$edit && !$compact) {
