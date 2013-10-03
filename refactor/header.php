@@ -13,15 +13,25 @@
   <script src="<?php echo get_template_directory_uri(); ?>/js/vendor/modernizr-2.5.3.min.js"></script>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script>window.jQuery || document.write('<script src="<?php echo get_template_directory_uri(); ?>/js/vendor/jquery-1.7.2.min.js"><\/script>')</script>
 
   <script type="text/javascript">
 
 <?php
 
-if ( is_front_page() /*is_page('home')*/ ) {
+$eas_pagename = get_query_var('pagename');
+if ( !$eas_pagename) {
+// If a static page is set as the front page, $pagename will not be set. Retrieve it from the queried object
+$post = get_queried_object();
+$eas_pagename = $post->post_name;
+}
+
+echo(' eas_pagename ="'.$eas_pagename.'";');
+
+if ( is_front_page() ) { /* || is_page('home') || $eas_pagename == 'home-2' */ 
+  echo (' eas_status = "showing background image";');
   $home = true;
   $bgs = eas_get_homebg();
   $all_bgs = array();

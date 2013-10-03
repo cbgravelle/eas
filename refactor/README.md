@@ -1,13 +1,11 @@
-# [Roots Theme](http://rootstheme.com/)
+# EASBeta Wordpress Theme
 
-Roots is a starting WordPress theme made for developers that’s based on [HTML5 Boilerplate](http://html5boilerplate.com/) and Bootstrap from Twitter.
+A theme for EmergentArtSpace.org
 
-## Quick start
 
-* Clone the git repo - `git clone git://github.com/retlehs/roots.git` - or [download it](https://github.com/retlehs/roots/zipball/master)
-* Read [Theme Activation](https://github.com/retlehs/roots/wiki/Theme-activation) to understand everything that happens once you activate Roots
+Based on the Roots framework...
 
-## Features
+## Roots Features
 
 * HTML5 Boilerplate’s markup, style, and .htaccess
 * Bootstrap from Twitter
@@ -20,16 +18,8 @@ Roots is a starting WordPress theme made for developers that’s based on [HTML5
 * Robots.txt optimized for SEO
 * [Multilingual ready](http://www.rootstheme.com/wpml/) (English, Spanish, French, Italian, Dutch, Brazilian Portuguese, Macedonian, Finnish, Danish, and Turkish)
 
-## Contributing
 
-Anyone and everyone is welcome to contribute. There are several ways you can help out:
-
-1. Raising [issues](https://github.com/retlehs/roots/issues) on GitHub
-2. Sending pull requests for bug fixes or new features and improvements
-3. Making the [docs](https://github.com/retlehs/roots/wiki) better
-4. Replying to questions on the [mailing list](http://groups.google.com/group/roots-theme)
-
-## Project information
+## Roots Project information
 
 * Source: [https://github.com/retlehs/roots](https://github.com/retlehs/roots)
 * Web: [http://rootstheme.com/](http://rootstheme.com/)
@@ -38,7 +28,7 @@ Anyone and everyone is welcome to contribute. There are several ways you can hel
 * Twitter: [@retlehs](https://twitter.com/#!/retlehs)
 * Contributors: [https://github.com/retlehs/roots/contributors](https://github.com/retlehs/roots/contributors)
 
-## License
+## Licenses
 
 ### Major components:
 

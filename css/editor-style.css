@@ -1,5 +1,5 @@
 /*
-Theme Name:         Roots
+Theme Name:         EAS Beta
 Description:        Used to style the TinyMCE editor
 */
 
@@ -7,15 +7,16 @@ body {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 18px;
-  color: #DDD;
-  background-color: #181818;
+  color: #000;
+  background-color: #ffffff;
 }
 
 
 a {
   color: #0088cc;
   text-decoration: none;
-}
+} 
+
 a:hover {
   color: #005580;
   text-decoration: underline;

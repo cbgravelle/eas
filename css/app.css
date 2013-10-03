@@ -22,6 +22,10 @@ body {
   position: absolute;
 }
 
+.alert {
+  color: #333333;
+}
+
 .inline {
   display: inline;
 }
@@ -131,12 +135,12 @@ a:hover {
   text-align: right;
 }
 
-input[type="text"], input[type="password"], input[type="email"] {
+input[type="text"], input[type="password"], input[type="email"], .easeditor{
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #aaaaaa !important;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2) !important;
   border-radius: 2px !important;
-  background-color: #2C2C2C !important;
-  border: 1px solid #333 !important;
-  color: #DDD !important;
-  box-shadow: 0 0 50px rgba(0,0,0,0.45) !important;
 }
 
 input[type="search"] {
@@ -365,6 +369,7 @@ td.mceToolbar {
 }
 
 .editorwrap {
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
   overflow: hidden;
 }
 
@@ -378,10 +383,10 @@ td.mceToolbar {
   border-color: #333;
   box-shadow: none;
   box-shadow: 0 0 50px rgba(0,0,0,0.34);
-  background-color: #232323;
-  color: #DDD;
+  background-color: #ffffff;
+  color: #555555;
   padding: 10px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .easeditor.inactive {
@@ -700,6 +705,7 @@ body.forum {
 
 body.forum #main {
   margin: 0px !important;
+  padding-top: 60px;
 }
 
 body.forum > div#wrap {
@@ -749,7 +755,6 @@ body.forum footer#content-info {
 }
 
 body.forum div.page-header {
-  padding-top: 60px;
   border-bottom: none;
   min-height: 170px;
   padding-bottom: 0px;
@@ -759,7 +764,7 @@ body.forum div.page-header {
 
 body.forum div.page-header:first-child div, body.forum div.page-header:first-child h1 {
   position: relative;
-  margin: 0 auto 15px auto;
+  margin: 0 auto 5px auto;
   text-align: center;
   /* height: 100px; */
   line-height: auto;
@@ -772,7 +777,7 @@ body.forum div.page-header:first-child h1{
 
 body.forum .catdescription {
   color: #999999;
-  margin: 20px auto;
+  margin: 0px auto;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
@@ -794,7 +799,7 @@ body.forum div.page-header nav .nav-pills{
 
 body.forum div.page-header nav{
   display:table;
-  margin: 50px auto 30px auto;
+  margin: 10px auto 10px auto;
 }
 
 body.forum .nav-tabs > li, .nav-pills {
@@ -838,6 +843,7 @@ body.forum div.page-header a.btn {
   height: 30px;
   line-height: 30px;
   margin-top: 0.4em;
+  font-size: 16px;
 }
 
 /*
@@ -868,7 +874,7 @@ body.page-template-forum-php figure.forumattachment img {
 body.forum ul.forum li {
   margin-top: 0px;
   border-bottom: 1px solid #eee;
-  padding: 30px 0px;
+  padding: 10px 0px;
   margin-bottom: 20px;
 }
 

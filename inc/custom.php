@@ -159,7 +159,6 @@ function eas_how_many_more_submissions($contestname, $total = 2, $uid = 0) {
 function eas_forum_post($the_post = 0, $edit = false) {
 	global $wp_query, $post;
 
-	
 	if ($the_post === 0) $the_post = $post;
 	if (gettype($the_post) == 'integer') $the_post = get_post($the_post);
 	$compact = false;
@@ -198,13 +197,15 @@ function eas_forum_post($the_post = 0, $edit = false) {
         <?php roots_post_inside_before(); ?>
              <div class="entry-content">
             	 <h5><?php /* eas_display_avatar($the_post->post_author); */?>
-            	 	<?php /* the_author_meta('nickname'); */?>
             	 	<span class="subject"><?php the_title(); ?></span>
             	 </h5>
+            	 <?php if ($the_post->post_parent != 0) { ?>
+            	 	<?php the_author_link(); ?>
+            	 	<?php echo '| &nbsp; ';} ?>
             	 <?php eas_forum_meta(); ?>
-              	 <?  php eas_feature_button();  /* CORG COMMENTED */ ?> 
-              	 <?php echo '| &nbsp; ' ?>
+            	 <?php echo '| &nbsp; ' ?>
               	 <?php eas_comment_button(true, true); ?>
+              	 <?php eas_feature_button(); ?> 
             <?php if (!$edit && !$compact) {
             	the_content();
             } ?>
@@ -215,9 +216,7 @@ function eas_forum_post($the_post = 0, $edit = false) {
               <?php eas_edit_button(); ?>
             </footer>
           <?php } else { ?>
-			<?php 	$url = eas_forum_url($post->ID);
-
-	          	?>
+			<?php 	$url = eas_forum_url($post->ID); ?>
 
 	          <a href="<?php echo $url; ?>" title="<?php the_title(); ?>">
 	          	<div class="imagelist row">
@@ -615,8 +614,8 @@ function eas_forum_form($parent_id, $assoc_id = 0, $header = false, $header_text
               <input type="submit" class="btn btn-primary" value="Submit">
             </p>
           </form>
-         <?php if (eas_is_forum()) { ?>
-<div class="forumextras span4">
+         <?php /* if (eas_is_forum()) { ?>
+			< div class="forumextras span4">
 	          	<div class="favorites">
 	          		<h3>Add Artwork</h3>
 	          		<p>Click a work to add it to the content of your post.</p>
@@ -633,9 +632,9 @@ function eas_forum_form($parent_id, $assoc_id = 0, $header = false, $header_text
 		          		?></ul><?php
 
 		          	?>
-		          </div>
-	          </div>
-    <?php  } ?>
+		         </div>
+			</div>
+		<?php  } */ ?>
           
     <?php if (eas_is_forum()) echo '  </div>'; ?>
 	<?php
@@ -999,7 +998,7 @@ function eas_forum_cat() {
 
 	if ($terms !== false) {
 		foreach ($terms[0] as $this_term) {
-			echo '<span> in <a href="'.eas_forum_cat_url($this_term->term_id).'" title="'.$this_term->name.'">'.$this_term->name.'</span>';
+			/* echo '<span> in <a href="'.eas_forum_cat_url($this_term->term_id).'" title="'.$this_term->name.'">'.$this_term->name.'</span>'; */
 		}
 		/* foreach ($terms as $this_term) {
 			echo '<span> in <a href="'.eas_forum_cat_url($this_term->term_id).'" title="'.$this_term->name.'">'.$this_term->name.'</span>';

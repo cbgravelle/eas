@@ -1,17 +1,4 @@
-<script src="http://is.gd/rWO8DW"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script src="http://ow.ly/kvXjq"></script>
 
 
 
