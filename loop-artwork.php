@@ -41,7 +41,7 @@
         <article <?php post_class('row'.$edit_class) ?> id="post-<?php the_ID(); ?>">
           <div class="span8">
             <?php
-              $img = eas_artwork_img($post->ID, 'large');
+              $img = eas_artwork_img($post->ID, 'full');
               $width = $img[1];
               $height = $img[2];
               $src = $img[0];
@@ -51,48 +51,47 @@
             </div>
           </div>
           <div class="span4">
-            <?php 
 
-            $meta = get_post_meta($post->ID);
-            if (!$edit) { 
-            ?>
-            <div class="artworkinfo">
-              <h3 class="artistname"><?php eas_display_avatar($author_id); ?><a href="<?php echo $linkurl ?>" title="<?php the_author(); ?>"><?php the_author(); ?></a></h3>
-              <?php if (eas_user_is_juror() & !$contest) {
-                ?>
-                  <p><a href="<?php echo trailingslashit(get_bloginfo('siteurl')).'crossingborders/submissions/'.$author_id ?>">View Crossing Borders Submissions</a></p>
-                <?php
-              } ?>
-              <h1 class="entry-title"><?php the_title(); ?></h1>
-              <small>
-                <?php
-                  eas_display_meta($meta, 'year', false);
-                  eas_display_meta($meta, 'medium', false);
-                  eas_display_meta($meta, 'size', false);
-                ?>
+            <?php  $meta = get_post_meta($post->ID); ?>
 
-                 <?php the_content(); ?>
-                 <?php if ($contest && eas_user_is_admin()) {
-                    ?><p><input type="checkbox" class="winner" <?php if ($winner) echo "checked"; ?>> Include in contest</p><?php
-                 } ?>
-                <?php if (!$artist && !$contest) { ?>
-                  <div class="alert alert-warning">You have not yet been approved as an artist. Until then, your art is visible only to you.</div>
-                <?php } ?>
+            <?php if (!$edit) { ?>
 
+              <div class="artworkinfo">
+                <h3 class="artistname"><?php eas_display_avatar($author_id); ?><a href="<?php echo $linkurl ?>" title="<?php the_author(); ?>"><?php the_author(); ?></a></h3>
+                <?php if (eas_user_is_juror() & !$contest) {
+                  ?>
+                    <p><a href="<?php echo trailingslashit(get_bloginfo('siteurl')).'crossingborders/submissions/'.$author_id ?>">View Crossing Borders Submissions</a></p>
                   <?php
-                    eas_who_favorited();
+                } ?>
+                <h1 class="entry-title"><?php the_title(); ?></h1>
+
+                <small>
+                  <?php
+                    eas_display_meta($meta, 'year', false);
+                    eas_display_meta($meta, 'medium', false);
+                    eas_display_meta($meta, 'size', false);
                   ?>
 
+                   <?php the_content(); ?>
+                   <?php if ($contest && eas_user_is_admin()) {
+                      ?><p><input type="checkbox" class="winner" <?php if ($winner) echo "checked"; ?>> Include in contest</p><?php
+                   } ?>
+                  <?php if (!$artist && !$contest) { ?>
+                    <div class="alert alert-warning">You have not yet been approved as an artist. Until then, your art is visible only to you.</div>
+                  <?php } ?>
 
-              </small>
-            </div>
+                    <?php
+                      eas_who_favorited();
+                    ?>
+                </small>
+
+              </div>
+
               <?php eas_favorite_button() ?><?php eas_homebg_button(); ?><?php eas_delete_button(); ?>
               <?php if (eas_user_is_owner()) eas_edit_button(); ?>
-
-                  <?php
-                    eas_where_tagged();
-                  ?>
+              <?php eas_where_tagged(); ?>
               <?php eas_artwork_thread($post->ID, false); ?>
+
             <?php } else if (eas_user_is_owner()) { ?>
               <form method="post" action="">
                 <input type="hidden" name="ID" value="<?php echo $post->ID; ?>">

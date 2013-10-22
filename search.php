@@ -9,14 +9,12 @@ $searchtype = eas_page_type();
     <?php roots_main_before(); ?>
       <div id="main" class="<?php echo FULLWIDTH_CLASSES; ?>" role="main">
         <div class="page-header">
-          <h1><?php _e('Search Results for', 'roots'); ?> <?php echo get_search_query(); ?></h1>
+          <h3><?php _e('Search Results for', 'roots'); ?> <strong><?php echo get_search_query(); ?></strong></h3>
         </div>
 				<div>
-					<h2>Portfolio</h2>
-        <?php eas_artist_search_results(get_search_query()); ?>
+          <?php eas_artist_search_results(get_search_query()); ?>
 				</div>
 				<div>
-					<h2>Forum</h2>
 					<?php eas_forum_search_results(get_search_query()); ?>
 				</div>
       </div><!-- /#main -->

@@ -11,10 +11,10 @@ if (!isset($content_width)) { $content_width = 940; }
 
 define('POST_EXCERPT_LENGTH',       40);
 define('WRAP_CLASSES',              'container');
-define('CONTAINER_CLASSES',         'row');
-define('MAIN_CLASSES',              'span8');
+define('CONTAINER_CLASSES',         ''); /* used to be row */
+define('MAIN_CLASSES',              'main');
 define('SIDEBAR_CLASSES',           'span4');
-define('FULLWIDTH_CLASSES',         'span12');
+define('FULLWIDTH_CLASSES',         ''); /* used to be span12 */
 define('GOOGLE_ANALYTICS_ID',       '');
 
 // Set the post revisions to 5 unless previously set to avoid DB bloat

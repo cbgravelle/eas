@@ -200,7 +200,9 @@ function eas_forum_post($the_post = 0, $edit = false) {
             	 	<span class="subject"><?php the_title(); ?></span>
             	 </h5>
             	 <?php if ($the_post->post_parent != 0) { ?>
-            	 	<?php the_author_link(); ?>
+            	 	<a href="<?php get_site_url();?>/artists/<?php the_author_meta(ID);?>">
+            	 			<?php the_author_link();?>
+            	 	</a>
             	 	<?php echo '| &nbsp; ';} ?>
             	 <?php eas_forum_meta(); ?>
             	 <?php echo '| &nbsp; ' ?>
@@ -567,15 +569,16 @@ function eas_forum_form($parent_id, $assoc_id = 0, $header = false, $header_text
 		$title = eas_re(get_the_title($parent_id));
 	} else if ($assoc_id) {
 		$title = eas_re(get_the_title($assoc_id));
-	}
-	if ($header == true) { ?>
-	    <h3>
-	      <?php
-	        echo $header_text;
-	      ?>
-	    </h3>
-	<?php } ?>
-<?php if (eas_is_forum()) echo '<div class="row">'; ?>
+	} ?>
+
+	<div class="forum_form">
+	
+		<?php if ($header == true) { ?>
+	    	<h3> <?php echo $header_text; ?> </h3>
+		<?php } ?>
+
+		<?php if (eas_is_forum()) echo '<div class="row">'; ?>
+
 		<form <?php if (eas_is_forum()) echo 'class="span8"'; ?> method="post" action="/post" id="forum_reply">
 			
             <input type="hidden" name="parent" value="<?php echo $parent_id; ?>">
@@ -636,7 +639,8 @@ function eas_forum_form($parent_id, $assoc_id = 0, $header = false, $header_text
 			</div>
 		<?php  } */ ?>
           
-    <?php if (eas_is_forum()) echo '  </div>'; ?>
+    	<?php if (eas_is_forum()) echo '  </div>'; ?>
+    </div>
 	<?php
 }
 
@@ -1482,8 +1486,11 @@ function eas_forum_search_results($search_query) {
 
 		$the_posts = $wpdb->get_results($the_query);
 		array_push($result_lists, $the_posts);
-
 	}
+
+	/* if (sizeof($result_lists)>0) { */
+		echo "<h2>Forum</h2>";
+	/* } */
 
 	$search_results = array();
 
@@ -1542,9 +1549,12 @@ function eas_artist_search_results($search_query) {
 			
 	}
 
-
+	/* if (sizeof($result_lists)>1) { */
+		echo "<h2>Portfolio</h2>";
+	/* } */
 
 	$search_results = array();
+
 
 	foreach ($result_lists as $list) {
 		foreach ($list as $r) {

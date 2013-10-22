@@ -5,8 +5,8 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600);
 
 body { 
-  background-color: #0C0E1B;
-  color: #DDD; 
+  background-color: #232323; /* #0C0E1B; */
+  color: #444; 
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 2em;
   font-weight: 300;
@@ -22,8 +22,15 @@ body {
   position: absolute;
 }
 
+.main{
+  width: 770px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .alert {
   color: #333333;
+  background-color: #ddd;
 }
 
 .inline {
@@ -87,20 +94,26 @@ h1 .avatar, h2 .avatar, h3 .avatar, h4 .avatar, h5 .avatar, h6 .avatar {
 }
 
 .btn:active {
-  background-color: #111;
-  color: #888;
+  background-color: #d8d8d8;
+  color: #666;
 }
 
 .btn-success:active {
-  background-color: #19511E;
+  background-color: #eee;
 }
 
 .btn-primary:active {
-  background-color: #1A3F52;
+  background-color: #eee;
 }
 
 a:hover {
   color: #5681CA;
+}
+
+.navbar-search .search-query:focus, .navbar-search .search-query.focused {
+  color:#eee;
+  text-shadow:none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .page-header h1, .page-header h2, .page-header h3 {
@@ -161,7 +174,7 @@ input[type="search"] {
 
 
 img.span6xspan4 {
-  width: 570px;
+  width: 580px;
 }
 
 .cclicense {
@@ -298,7 +311,9 @@ select {
    Primary Content
    ========================================================================== */
 
-#main { }
+#main { 
+  padding-top: 60px; 
+}
 
 
 
@@ -431,8 +446,17 @@ body.top-navbar { padding-top: 50px; /* 120px; */ }
 body.home .page-header {
   border-bottom: none;
 }
+
+div#wrap {
+  background-color: #fff;
+  padding: 0 20px 50px 20px;
+  margin-bottom: -100px;
+  margin-top:0px;
+}
+
 body.home #wrap {
   position: absolute;
+  background-color: transparent !important;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -483,6 +507,7 @@ body.home footer#content-info p {
 }
 
 body.home .homeinner {
+  margin-top:-50px;
   padding: 10px 0 0 0;
   font-size: 1.25em;
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
@@ -661,7 +686,7 @@ ul.users li .followbtn {
 a.userblock, a.userblock:hover {
   display: inline-block;
   text-decoration: none;
-  color: #DDD;
+  color: #666;
   margin-bottom: 9px;
 }
 
@@ -698,34 +723,14 @@ a.userblock h3 .avatar {
    Forum
    ========================================================================== */
 
-body.forum {
-  background-color: #232323;
-  color: #555;
-}
 
-body.forum #main {
-  margin: 0px !important;
-  padding-top: 60px;
-}
-
-body.forum > div#wrap {
-  background-color: #fff;
-  padding: 0 20px 50px 20px;
-  margin-bottom: -100px;
-  margin-top:0px;
-}
-
-body.forum .row {
-  margin:0 !important;
-}
-
-body.forum footer p {
+footer p {
   height: 20px;
   float: right;
   color: #333;
 }
 
-body.forum .btn {
+.btn {
   display: inline-block;
   font-weight: 300;
   border: 1px solid #000;
@@ -735,26 +740,26 @@ body.forum .btn {
   background-clip: padding-box;
 }
 
-body.forum a.eas_new_post_button {
+a.eas_new_post_button {
   display:none;
 }
 
-body.forum time a, body.forum a.eas_comment_button {
+time a, a.eas_comment_button {
   color: #666;
 }
 
-body.forum a.eas_comment_button:hover, body.forum time a:hover {
+a.eas_comment_button:hover, time a:hover {
   color: #0088cc;
   text-decoration: underline;
 }
 
-body.forum footer#content-info {
+footer#content-info {
   margin-top:-50px;
   border-top: none;
   padding: 0 0 20px 0 !important;
 }
 
-body.forum div.page-header {
+div.page-header {
   border-bottom: none;
   min-height: 170px;
   padding-bottom: 0px;
@@ -762,20 +767,20 @@ body.forum div.page-header {
   text-align: center;
 }
 
-body.forum div.page-header:first-child div, body.forum div.page-header:first-child h1 {
+div.page-header:first-child div, div.page-header:first-child h1 {
   position: relative;
-  margin: 0 auto 5px auto;
+  margin: 0 auto 15px auto;
   text-align: center;
   /* height: 100px; */
   line-height: auto;
 }
 
-body.forum div.page-header:first-child h1{
+div.page-header:first-child h1{
   display:block;
 }
 
 
-body.forum .catdescription {
+.catdescription {
   color: #999999;
   margin: 0px auto;
   font-size: 16px;
@@ -783,37 +788,37 @@ body.forum .catdescription {
   text-align: center;
 }
 
-body.forum div.page-header h1 {
+div.page-header h1 {
   color: #242424;
   font-size: 70px;
   font-weight: bold;
   margin:20px;
 }
 
-body.forum div.page-header nav .nav-pills{
+div.page-header nav .nav-pills{
   margin-top: 30px;
   padding: 20px auto;
   text-align:center;
   background-color: #fff !important;
 }
 
-body.forum div.page-header nav{
+div.page-header nav{
   display:table;
   margin: 10px auto 10px auto;
 }
 
-body.forum .nav-tabs > li, .nav-pills {
+.nav-tabs > li, .nav-pills {
   margin: 10px auto !important;
   text-align: center;
 }
 
-body.forum .nav-pills li.active a, .nav-pills li.active a:hover {
+.nav-pills li.active a, .nav-pills li.active a:hover {
   background-color: #fff !important;
   color: #333;
 }
 
 
-body.forum .nav-pills li.active a, .nav-pills li.active a:hover {
+.nav-pills li.active a, .nav-pills li.active a:hover {
   color: #333;
   text-decoration: underline;
   font-weight: normal;
@@ -823,12 +828,12 @@ body.forum .nav-pills li.active a, .nav-pills li.active a:hover {
 }
 
 
-body.forum .nav-tabs > li, .nav-pills li a strong {
+.nav-tabs > li, .nav-pills li a strong {
   color: #333;
 }
 
 
-body.forum div.page-header a.btn {
+div.page-header a.btn {
   display: none; /* inline-block; */
   background: none;
   border:none;
@@ -856,13 +861,13 @@ body.forum div.page-header a.btn {
 }
 */
 
-body.forum div#eas_forum_page_nums, ul.forum li article {
+div#eas_forum_page_nums, ul.forum li article {
     margin-left: auto;
     margin-right: auto;
     max-width: 768px;
 }
 
-body.forum img {
+img {
   box-shadow:none !important;
   border: none !important;
 }
@@ -871,14 +876,14 @@ body.page-template-forum-php figure.forumattachment img {
   width: 80px;
 }
 
-body.forum ul.forum li {
+ul.forum li {
   margin-top: 0px;
   border-bottom: 1px solid #eee;
   padding: 10px 0px;
   margin-bottom: 20px;
 }
 
-body.forum ul.forum li li {
+ul.forum li li {
   border-top: none;
   border-bottom: none;
   padding-bottom: 0;
@@ -911,7 +916,7 @@ ul.forum li article {
   margin-right: auto;
 }
 
-body.forum ul.forum li.compact {
+ul.forum li.compact {
   border-top: none;
   border-bottom: none;
   border-radius: 0;
@@ -1156,8 +1161,8 @@ ul.galleryview li li article h2 {
   width: 100%;
   background-color: rgba(0,0,0,0.7);
   position: absolute;
-  bottom: 1px;
-  left: 1px;
+  bottom: 0px;
+  left: 0px;
   color: #DDD;
   font-weight: 300;
   font-size: 1.5em;
@@ -1219,6 +1224,7 @@ img.singleart {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 40px;
+  /* width: 90%; */
 }
 
 figure.artwork figcaption {
@@ -1700,7 +1706,7 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 
 @media (min-width: 768px) {
   img.singleart {
-    position: fixed;
+    /* position: fixed; */
   }
 
   figure.artwork figcaption .ccinfo, figure.artwork figcaption .favbutton:not(.btn-success) {
