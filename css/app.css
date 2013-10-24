@@ -23,9 +23,13 @@ body {
 }
 
 .main{
-  width: 770px;
+  max-width: 768px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.gray3 {
+  color: #333333;
 }
 
 .alert {
@@ -34,7 +38,19 @@ body {
 }
 
 .inline {
-  display: inline;
+  display: inline !important;
+}
+
+.clear {
+  clear: both;
+}
+
+.float_left {
+  float:left;
+}
+
+.float_right {
+  float:right;
 }
 
 figure {
@@ -209,6 +225,43 @@ body.admin-bar .navbar-fixed-top { top: 28px; }
 }
 
 
+div.page-header {
+  border-bottom: none;
+  /* min-height: 170px; */
+  margin-top: 60px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  width:100%;
+  text-align: center;
+}
+
+/*
+div.page-header:first-child div, div.page-header:first-child h1 {
+  position: relative;
+  margin: 0 auto 15px auto;
+  text-align: center;
+  line-height: auto;
+}
+*/
+
+
+.catdescription {
+  color: #999999;
+  margin: 0px auto;
+  font-size: 14px;
+  /* font-weight: bold; */
+  text-align: center;
+}
+
+div.page-header h1 {
+  display:block;
+  color: #242424;
+  font-size: 70px;
+  font-weight: bold;
+  margin:20px;
+}
+
+
 .navbar .nav > li > a {
   font-size: 18px;
   font-weight: 300;
@@ -269,7 +322,7 @@ select {
    ========================================================================== */
 
 #content {
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 #content, #content li.forumpost {
@@ -312,7 +365,7 @@ select {
    ========================================================================== */
 
 #main { 
-  padding-top: 60px; 
+  padding-top: 0px; 
 }
 
 
@@ -507,7 +560,6 @@ body.home footer#content-info p {
 }
 
 body.home .homeinner {
-  margin-top:-50px;
   padding: 10px 0 0 0;
   font-size: 1.25em;
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
@@ -665,6 +717,63 @@ ul.slideritems:hover li.slidertitle {
    Artists
    ========================================================================== */
 
+body.artists .page-header h1{
+  margin-bottom: 0px;
+  /* text-align: left; */
+}
+
+body.artists .catdescription {
+  /* text-align: left;
+  margin-bottom: 20px; */
+}
+
+div#artists_grid{
+  margin: 30px auto 10px auto;
+  /* max-width: 780px; */
+}
+
+div.artists_cell{
+  position: relative;
+  display: block;
+  float: left;
+  width: 170px;
+  height: 310px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  /* background: #eeeeee; */
+  overflow:hidden;
+}
+
+div.artists_cell a.userblock{
+  width:100%;
+}
+
+div.artists_cell div.nickname{
+  font-size: 16px;
+  color: #000;
+  text-align: center;
+  width:100%;
+}
+
+div.artists_cell .usermeta{
+  margin:0 auto;
+  line-height: 20px;
+  text-align: center;
+}
+
+div.artists_cell .artistmeta{
+  margin:0 auto;
+  font-size:12px;
+  text-align:center;
+  line-height: 20px;
+}
+
+div.artists_cell .artistmetaval{
+  margin:0 auto;
+  line-height: 20px;
+}
+
+
 ul.users {
   list-style-type: none;
   margin: 0;
@@ -717,6 +826,10 @@ a.userblock h3 .avatar {
   height: 170px;
 }
 
+body.artists footer {
+  max-width:768px;
+}
+
 
 
 /* =============================================================================
@@ -728,6 +841,10 @@ footer p {
   height: 20px;
   float: right;
   color: #333;
+}
+
+body.forum footer {
+  max-width:768px;
 }
 
 .btn {
@@ -754,45 +871,9 @@ a.eas_comment_button:hover, time a:hover {
 }
 
 footer#content-info {
-  margin-top:-50px;
+  /* margin-top:-50px; */
   border-top: none;
   padding: 0 0 20px 0 !important;
-}
-
-div.page-header {
-  border-bottom: none;
-  min-height: 170px;
-  padding-bottom: 0px;
-  width:100%;
-  text-align: center;
-}
-
-div.page-header:first-child div, div.page-header:first-child h1 {
-  position: relative;
-  margin: 0 auto 15px auto;
-  text-align: center;
-  /* height: 100px; */
-  line-height: auto;
-}
-
-div.page-header:first-child h1{
-  display:block;
-}
-
-
-.catdescription {
-  color: #999999;
-  margin: 0px auto;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-}
-
-div.page-header h1 {
-  color: #242424;
-  font-size: 70px;
-  font-weight: bold;
-  margin:20px;
 }
 
 div.page-header nav .nav-pills{
@@ -975,7 +1056,7 @@ article.forum h5 .subject {
   display: inline-block;
   color: #232323;
   font-size:  34px; /* 1.7em; */
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   line-height: 34px;
 }
 
@@ -1077,7 +1158,7 @@ body.page-template-about-php div.page-header{
 }
 
 body.page-template-about-php div.about_container{
-  max-width:770px;
+  max-width:768px;
   margin: 0 auto;
 }
 
@@ -1107,6 +1188,9 @@ ul.wheretagged {
   display: inline;
 }
 
+body.single #wrap {
+  margin-top:60px !important;
+}
 
 div.artworkinfo ul.whofavorited {
   list-style-type: none;
@@ -1224,6 +1308,7 @@ img.singleart {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 40px;
+  margin-top: 10px;
   /* width: 90%; */
 }
 
@@ -1233,7 +1318,7 @@ figure.artwork figcaption {
 }
 
 figure.artwork figcaption h3 {
-  color: #EEE;
+  color: #555555;
 }
 
 figure.artwork figcaption .captioninner {
@@ -1287,16 +1372,40 @@ body.author #content figure {
   margin-bottom: 20px;
 }
 
+#artist_profile_header{
+  position: relative;
+  min-height: 80px;
+  max-height: 150px;
+  text-align: left;
+  padding-bottom:20px;
+  margin-bottom:10px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+#artist_profile_info {
+  padding: 40px 0px 0px 20px; */
+  position: relative;
+}
+
+body.author .artist_name {
+  font-size: 36px;
+  padding-bottom: 25px;
+}
+
 .page-header .btn {
   margin-top: -4px;
 }
 
 .artistmeta {
-  margin-left: 20px;
+  margin-left: 0px;
+}
+
+.artistmetaname, .artistmetaval {
+  display: inline-block;
 }
 
 .artistmetaval {
-  margin-right: 20px;
+  margin-right: 0px;
 }
 
 .artinfo .artistmeta, .artworkinfo .artistmeta, .medium .artistmeta {
@@ -1309,6 +1418,10 @@ body.author #content figure {
 
 .inlineels p, .inlineels h3 {
   display: inline;
+}
+
+body.artists .artinfo {
+  margin-bottom: 50px;
 }
 
 

@@ -944,36 +944,36 @@ function eas_display_meta($meta, $key, $display_key = true) {
 function eas_get_meta_display($meta, $key, $display_key = true) {
 		if (isset($meta[$key]) && !empty($meta[$key][0])) {
 		if ($key == 'location') {
-			$label = 'Location: ';
+			$label = 'Location:&nbsp&nbsp';
 			$text = $meta[$key][0];
 		} else if ($key == 'year') {
-			$label = 'Year: ';
+			$label = 'Year:&nbsp&nbsp';
 			$text = $meta[$key][0];
 		} else if ($key == 'medium') {
 			$label = '';
 			$text = $meta[$key][0];
 		} else if ($key == 'description') {
-			$label = 'Description: ';
+			$label = 'Description:&nbsp&nbsp';
 			$text = $meta[$key][0];
 		} else if ($key == 'school') {
-			$label = 'School: ';
+			$label = 'School:&nbsp&nbsp';
 			$text = $meta[$key][0];
 		} else if ($key == 'prize') {
-			$label = 'Prize: ';
+			$label = 'Prize:&nbsp&nbsp';
 			$text = $meta[$key][0];
 		}
 	}
 
-	$the_return = '<span class="artistmeta">';
+	$the_return = '<div class="artistmeta">';
 
 	if (!empty($text)) {
 		if ($display_key) {
-			$the_return.='<span class="artistmetaname">'.$label.'</span>';
+			$the_return.='<div class="artistmetaname">'.$label.'</div>';
 		}
-			$the_return.='<span class="artistmetaval">'.$text.'</span>';
+			$the_return.='<div class="artistmetaval inline">'.$text.'</div>';
 	}
 
-	$the_return .= '</span>';
+	$the_return .= '</div>';
 
 	return $the_return;
 }
@@ -1270,6 +1270,154 @@ function eas_user_is_juror() {
 }
 
 
+
+function eas_artists_grid($page = 0, $per_page = 20, $contest = false, $sort = 'recent') {
+	global $wpdb;
+	$contestname = false;
+	if ($contest !== false) {
+		$contestname = $contest;
+		$contest = true;
+	} 
+	if ($page == 0) $page = 1;
+	$contest_query = '';
+	if ($contest) {
+		$contest_query = $wpdb->prepare(
+			"
+			join wp_postmeta pm
+			on p.ID = pm.post_id
+			and pm.meta_key = 'contest'
+			and pm.meta_value = %s
+			where p.post_status = 'draft' 
+			", $contestname
+		);
+
+		$user_type_query = "";
+	} else {
+		$contest_query = "where p.post_status = 'publish' ";
+		$user_type_query = "    	        join (
+    	        	select distinct m2.*
+    	        	from wp_usermeta m2
+    	        	join wp_usermeta m3
+    	        	on m2.user_id = m3.user_id
+    	        	where m2.meta_key = 'wp_capabilities'
+    	        	and m2.meta_value like 'a:1:{s:6:\"artist\";s:1:\"1\";}'
+    	        	and m3.meta_key = 'verified'
+    	        	and m3.meta_value = 1
+    	        ) as m
+    				on u.ID = m.user_id";
+	}
+		
+    $query = $wpdb->prepare("
+    	      select distinct u.ID
+    	        from $wpdb->users u
+							join wp_usermeta um ON um.user_id = u.ID
+    	        join (
+    	          select p.* 
+    	          from wp_posts p
+    	          ".$contest_query."
+    	          and p.post_type = 'artwork'
+    	          order by p.post_date desc  
+    	        ) as a
+    	        on u.ID = a.post_author
+    	        ".$user_type_query."
+    			where um.meta_key = 'nickname'
+					ORDER BY
+					".($sort == 'name' ? "um.meta_value ASC" : "a.post_date DESC")."
+    			limit %d offset %d
+    	    ", $per_page, ($page-1)*$per_page);
+	    $author_ids = $wpdb->get_results($query);
+	    foreach ($author_ids as $author) {
+	      // eas_display_user($author->ID, true, $contestname);
+	      eas_artists_cell($author->ID);
+	    }
+}
+
+function eas_artists_cell($id, $contest = false) {
+
+
+  $this_author = get_userdata($id);
+  $artworks = eas_artworks_by_user($id, 1, $contest);
+  $meta = get_user_meta($id);
+
+  if ($contest !== false) {
+  	$linkurl = trailingslashit(get_bloginfo('siteurl')).$contest.'/submissions/'.$id;
+  } else {
+  	$linkurl = eas_artist_page_url($id);
+  }
+
+  $the_return = '';
+  
+  $the_return.='
+    <div class="artists_cell">
+	    <a class="userblock" href="'.$linkurl.'">
+	      	'./*eas_get_avatar_display($id).*/'
+	  		<div class="nickname">'.$this_author->nickname.'</div>
+	      	'.eas_get_follow_button($id, true).'
+		</a>
+      <!-- div class="imagelist row" -->
+  ';
+
+    foreach ($artworks as $a) {
+
+		  $img = eas_artwork_img($a->ID, 'span2-crop');
+		  $src = $img[0];
+
+		  /* formerly a link to the artwork: eas_artwork_url($a->ID) */
+		  $the_return.='
+          <a href="'.$linkurl.'">
+	          <!--figure class="span2"-->
+	          <img src="'.$src.'">
+	          <!--/figure-->
+          </a>
+		  ';
+		}
+
+	$the_return.='
+		<div class="usermeta">
+			'.eas_get_meta_display($meta, 'location', false).'
+		</div>
+		<div class="usermeta">
+			'.eas_get_meta_display($meta, 'school', false).'
+		</div>
+		<div class="usermeta">'.eas_get_birthday_display_for_admins($id).'</div>
+		<div class="usermeta">
+			'.eas_get_email_display_for_admins($id).'
+		</div>
+		</div>';
+
+   echo $the_return;
+
+}
+
+/* 
+function eas_show_usermeta($var, $meta, $id) {
+	switch ($var) {
+		case 'location':
+			str = eas_get_meta_display($meta, 'location', false);
+			break;
+		case 'school':
+			str = eas_get_meta_display($meta, 'school', false);
+			break;
+		case 'birthday':
+			str = eas_get_birthday_display_for_admins($id);
+			break;
+		case 'email':
+			str = eas_get_email_display_for_admins($id);
+			break;
+	}
+
+	/*
+	if(empty(str)) { 
+		return;
+	} else {  
+		return '<div class="usermeta">'.str.'</div></br>';
+	}
+
+
+}
+*/
+
+
 function eas_recently_updated_artists($page = 0, $per_page = 10, $contest = false, $sort = 'recent') {
 	global $wpdb;
 	$contestname = false;
@@ -1327,6 +1475,7 @@ function eas_recently_updated_artists($page = 0, $per_page = 10, $contest = fals
 	    $author_ids = $wpdb->get_results($query);
 	    foreach ($author_ids as $author) {
 	      eas_display_user($author->ID, true, $contestname);
+	      // eas_artists_cell($author->ID);
 	    }
 }
 
@@ -2407,9 +2556,8 @@ function eas_page_links() {
 	$pagename = get_query_var('pagename');
 	if(!$pagename)
 		$pagename = get_query_var('post_type'); 
-
-	global $epl_total, $epl_calc;
 	$perpage = 10;
+	global $epl_total, $epl_calc;
 	if(!$epl_calc)
 	{
 		switch($pagename)
@@ -2493,8 +2641,27 @@ function eas_page_links() {
 			break;
 
 			case 'artists':
+				$perpage = 20;
 				global $wpdb;
-				$sql = "select count(distinct u.ID) as c from wp_users u join wp_usermeta um ON um.user_id = u.ID join ( select p.* from wp_posts p where p.post_status = 'publish' and p.post_type = 'artwork' order by p.post_date desc ) as a on u.ID = a.post_author join ( select distinct m2.* from wp_usermeta m2 join wp_usermeta m3 on m2.user_id = m3.user_id where m2.meta_key = 'wp_capabilities' and m2.meta_value like 'a:1:{s:6:\"artist\";s:1:\"1\";}' and m3.meta_key = 'verified' and m3.meta_value = 1 ) as m on u.ID = m.user_id where um.meta_key = 'nickname' ORDER BY um.meta_value";
+				$sql = "select count(distinct u.ID) as c "
+						."FROM wp_users u "
+						."	JOIN wp_usermeta um" 
+						."	ON um.user_id = u.ID "
+						."	JOIN ( 	select p.* "
+						."			from wp_posts p "
+						."			where p.post_status = 'publish' and p.post_type = 'artwork' "
+						."			order by p.post_date desc ) as a "
+						."	ON u.ID = a.post_author "
+						."	JOIN ( 	select distinct m2.* "
+						."			from wp_usermeta m2 "
+						."				join wp_usermeta m3 "
+						."				on m2.user_id = m3.user_id "
+						."			where m2.meta_key = 'wp_capabilities' "
+						."			  and m2.meta_value like 'a:1:{s:6:\"artist\";s:1:\"1\";}' "
+						."			  and m3.meta_key = 'verified' and m3.meta_value = 1 ) as m "
+						."	ON u.ID = m.user_id "
+						."WHERE um.meta_key = 'nickname' "
+						."ORDER BY um.meta_value";
 				$epl_total = ceil($wpdb->get_var($sql)/$perpage);
 			break;
 		}
@@ -2502,7 +2669,7 @@ function eas_page_links() {
 	$epl_calc = true;
 	$big = 999999999; // need an unlikely integer
 
-  echo '<div id="eas_forum_page_nums">';
+  echo '<div id="eas_forum_page_nums" class="clear">';
   echo paginate_links( array(
     'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
     'format' => '?paged=%#%',

@@ -61,16 +61,20 @@
       <div id="main" class="<?php echo FULLWIDTH_CLASSES; ?>" role="main">
         <?php if ($artist || $owner || $contestview) { ?>
           <div class="page-header">
-            <h1>
-              <?php eas_display_avatar($author); ?>
-              <?php echo $this_author->nickname; ?>
-            <?php eas_follow_button(); ?>   
-            </h1>  
-            <?php
-              eas_display_meta($this_meta, 'location');
-            ?>
-            <?php eas_display_meta($this_meta, 'school'); ?>
-            <?php eas_display_email_for_admins($author); ?>
+            <div id="artist_profile_header">
+              <div class="artist_avatar float_left">
+                <?php eas_display_avatar($author); ?>
+              </div>
+              <div id="artist_profile_info" class="float_left">
+                <div class="artist_name"><?php echo $this_author->nickname; ?></div>
+                <?php eas_follow_button(); ?>   
+
+                <?php eas_display_meta($this_meta, 'location');?>
+                <?php eas_display_meta($this_meta, 'school'); ?>
+                <?php eas_display_email_for_admins($author); ?>
+              </div>
+              <br class="clear" />
+            </div>  
           </div>
           <?php if ($artistpending && $admin) eas_approve_artist_button(); ?>
           <?php if (!$contestview) { ?>
@@ -81,7 +85,7 @@
           </small>
           <?php } ?>
           <div class="row">
-            <div class="span9">
+            <div class= "span9" <?php /*echo MAIN_CLASSES; */?>>
               <?php
 
                 if (!$contestview) {
