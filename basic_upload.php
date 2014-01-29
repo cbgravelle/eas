@@ -1,6 +1,3 @@
-
-
-
 <?php
 /*
 Template Name: Basic Upload
@@ -19,10 +16,6 @@ if (isset($_REQUEST['contestname'])) {
   $contestname = $_REQUEST['contestname'];
   $contestform = true;
 }
-
-
-
-
 
 
 if (isset($_FILES['artwork'])) {
@@ -122,7 +115,7 @@ if($_FILES['artwork']['type'] != 'image/jpeg')
       update_post_meta($artwork_id, 'medium', $_POST['medium']);
       update_post_meta($artwork_id, 'size', $_POST['size']);
 
-      eas_save_cc($artwork_id);
+      /* eas_save_cc($artwork_id); */
 
       if ($contestform) {
         update_post_meta($artwork_id, 'contest', $_POST['contestname']);
@@ -136,8 +129,6 @@ if($_FILES['artwork']['type'] != 'image/jpeg')
       wp_redirect($redirect_url);
       exit;
     }
-
-  
   }
 
   }

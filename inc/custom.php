@@ -305,9 +305,7 @@ function eas_get_artwork_form($file = true, $action = "/upload", $elid="upload_a
             foreach (array('School', 'Location', 'Birthday') as $m) {
 
 				if (!(isset($meta[strtolower($m)]) && count($meta[strtolower($m)]) && !empty($meta[strtolower($m)][0]))) { 
-
 					array_push($nudge, $m);
-
             	}
             }
 
@@ -320,9 +318,9 @@ function eas_get_artwork_form($file = true, $action = "/upload", $elid="upload_a
             }              
 						if(count($nudge))
 							$the_return .= '<p><span class="required">*</span> required';
-           
 
-            $the_return .= eas_get_cc_settings('Creative Commons License');
+            // $the_return .= eas_get_cc_settings('Creative Commons License');
+
             if ($contestform) {
             	$howmany = eas_how_many_more_submissions($contestname);
             	if ($howmany !== false) {
@@ -342,6 +340,72 @@ function eas_get_artwork_form($file = true, $action = "/upload", $elid="upload_a
         return $the_return;
 }
 
+
+function eas_artwork_form_v2($file = true, $action = "/upload", $elid="upload_art", $the_post = false, $the_meta = false, $disabled = false, $contestname = false, $contestform = false) {
+	echo eas_get_artwork_form_v2($file, $action, $elid, $the_post, $the_meta, $disabled, $contestname, $contestform);
+}
+
+function eas_get_artwork_form_v2($file = true, $action = "/upload", $elid="upload_art", $the_post = false, $the_meta = false, $disabled = false, $contestname = false, $contestform = false) {
+	global $user_ID;
+	get_currentuserinfo();
+	$meta = get_user_meta($user_ID);
+	$title = $year = $medium = $credits = $moreinfo = '';
+	if ($the_post !== false) {
+		$meta = get_post_meta($the_post->ID);
+		$title = $the_post['post_title'];
+		$year = $meta['year'];
+		$medium = $meta['medium'];
+		$credits = $meta['credits'];
+		$moreinfo = get_the_content($the_post->ID);
+	}
+	$the_return = '<form ';
+		if ($file) $the_return.= ' enctype="multipart/form-data"'; 
+		$the_return .='action="'.$action.'" method="post" id="'.$elid.'">';
+         if ($file) $the_return .='	<p><input type="file" name="artwork"></p>';
+
+         if ($contestname !== false) $the_return .= '<input type="hidden" name="contest" value="'.$contestname.'">';
+         $the_return.='   <p><input type="text" name="title" placeholder="Title" value="'.$title.'"> &nbsp*</p>
+            <p><input type="text" name="raey" placeholder="Year" value="'.$year.'"> &nbsp*</p>
+            <p><input type="text" name="medium" placeholder="Medium" value="'.$medium.'"> &nbsp*</p>
+            <p><input type="text" name="size" placeholder="Size"> &nbsp*</p>
+            <p>Description</p>
+            <p>'.eas_get_editor($moreinfo, 'moreinfo', 'more_info', true).'</p>';
+            
+            $nudge = array();
+            foreach (array('School', 'Location', 'Birthday') as $m) {
+				if (!(isset($meta[strtolower($m)]) && count($meta[strtolower($m)]) && !empty($meta[strtolower($m)][0]))) { 
+					array_push($nudge, $m);
+            	}
+            }
+
+            foreach ($nudge as $n) {
+				$required = $n != 'School' ?  ' <span class="required">*</span>' : '';
+            	$the_return.='<p><input type="text" name="'.strtolower($n).'" placeholder="Your '.$n.'" value="">'.$required.'</p>';
+            } 
+			if(count($nudge)) {
+				$the_return .= '<p><span class="required">*</span> required';
+			}
+
+            if ($contestform) {
+            	$howmany = eas_how_many_more_submissions($contestname);
+            	if ($howmany !== false) {
+            		$the_return .='<label class="checkbox" for="contestname"><input type="checkbox" checked name="contestname" value="'.$contestname.'">Submit this work to our current contest <em>Crossing Borders</em>? Work submitted for this contest will not be visible on the site until the contest is over.</label>';
+
+            	}
+            }
+
+            $the_return .='<input type="hidden" id="attachmentid" name="artwork_img_id" value="">
+              <input id="artworksubmit" type="submit" class="btn btn-primary';
+              if ($disabled) $the_return.= ' disabled';
+              $the_return.='"';
+              if ($disabled) $the_return.= ' disabled ';
+              $the_return.= 'value="Submit">';
+        $the_return.='</form>';
+
+        return $the_return;
+}
+
+/*
 function new_eas_artwork_form($disabled = false) {
 	global $user_ID;
 	get_currentuserinfo();
@@ -367,20 +431,15 @@ function new_eas_artwork_form($disabled = false) {
     foreach (array('School', 'Birthday', 'Location') as $m) {
 
 		if (!(isset($meta[strtolower($m)]) && count($meta[strtolower($m)]) && !empty($meta[strtolower($m)][0]))) { 
-
 			array_push($nudge, $m);
-
     	}
     }
 
     if (count($nudge)) {
-
     	$the_return.='<p>Please include the following information to help us determine if your work is right for the site (it most likely is!). You can change this information in your settings.</p>';
-    	
     }            	
 
     foreach ($nudge as $n) {
-
     	if ($n == 'Location') {
     		$additional = ' (City, Country) ';
     	} else {
@@ -391,7 +450,7 @@ function new_eas_artwork_form($disabled = false) {
     	';
     }    
 
-    $the_return .= eas_get_cc_settings('Creative Commons License');
+     $the_return .= eas_get_cc_settings('Creative Commons License'); 
 
     $the_return .= '<input id="artworksubmit" type="submit" class="btn btn-primary';
 
@@ -400,12 +459,8 @@ function new_eas_artwork_form($disabled = false) {
               if ($disabled) $the_return.= ' disabled ';
               $the_return.= 'value="Submit">';
         $the_return.='</form>';
-
         return $the_return;
-
-
-
-}
+} */
 
 function eas_cc_settings($heading='Creative Commons License', $explain = true) {
 
@@ -550,6 +605,21 @@ function eas_get_cc($post_id = 0, $text = true) {
 
 	return $the_return;
 	}
+}
+
+function eas_display_cc_general($post_id = 0, $text = true) {
+  echo eas_get_cc_general($post_id, $text);
+}
+
+
+function eas_get_cc_general($post_id = 0, $text = true) {
+  
+  $ccstr = 'by-nc-nd';
+  $the_return = '<div class="cclicense">
+    All works are licensed under a 
+    <a rel="license" href="http://creativecommons.org/licenses/'.$ccstr.'/3.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivs 3.0 License</a></div>';
+  return $the_return;
 }
 
 function eas_cc_words($str) {

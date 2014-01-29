@@ -1,8 +1,5 @@
 <?php
   
-
-
-
   $this_author = get_userdata($author);
   $this_meta = get_user_meta($author);
 
@@ -107,23 +104,17 @@
             <?php if (!$contestview) { ?>
             <div class="span3">
               <?php $favs = eas_get_favorites($author); 
-              if (count($favs)) { 
-                ?>
+              if (count($favs)) { ?>
                    <h3><?php echo $this_author->nickname; ?>'s Favorites</h3>
-                    <?php
-                      foreach ($favs as $f) {
+                   <br />
+                    <?php foreach ($favs as $f) {
                         $img = eas_artwork_img($f->id, 'large');
                         $src = $img[0];
-                        ?>
-                          <img src="<?php echo $src; ?>">
-                        <?php
-                      }
-                    ?>
-                <?php 
-              }
-                ?>
+                        $url = eas_artwork_url($f->id); 
+                        echo "<a href= ".$url."><img src= ".$src."></a>";
+                     } ?>
+              <?php } ?>
 
-             
             </div>
             <?php } ?>
           <?php } else {

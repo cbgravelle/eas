@@ -124,4 +124,4 @@
     </article>
   <?php roots_post_after(); ?>
 <?php endwhile; /* End loop */ ?>
-<?php eas_display_cc(); ?>
+<?php /* eas_display_cc(); */ ?>
