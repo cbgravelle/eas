@@ -3,6 +3,10 @@
 Template Name: Login
 */
 
+/*
+require_once('inc/recaptchalib.php');
+
+
 if (isset($_GET['action'])) {
   if ($_GET['action'] == 'logout') {
 
@@ -12,6 +16,7 @@ if (isset($_GET['action'])) {
     exit;
   }
 }
+*/
 
 
 
@@ -35,7 +40,6 @@ if (isset($_POST['register'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
   $nickname = $_POST['nickname'];
-
 
 
   $new_user_id = wp_create_user($username, $password, $email);
@@ -83,7 +87,29 @@ if (isset($_POST['register'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-
+  /* from https://developers.google.com/recaptcha/docs/php */
+  /*
+  require_once('recaptchalib.php');
+  $publickey = "6LcaD-4SAAAAAHmAWf78-Ca_UovSYNVvzQtZVH2z";
+  $privatekey = "6LcaD-4SAAAAAHmAWf78-Ca_UovSYNVvzQtZVH2z";
+  $resp = null;
+  $error = null;
+  # was there a reCAPTCHA response?
+  if ($_POST["recaptcha_response_field"]) {
+    $resp = recaptcha_check_answer ($privatekey,
+                                    $_SERVER["REMOTE_ADDR"],
+                                    $_POST["recaptcha_challenge_field"],
+                                    $_POST["recaptcha_response_field"]);
+    if (!$resp->is_valid) {
+      // What happens when the CAPTCHA was entered incorrectly
+      die ("The reCAPTCHA wasn't entered correctly. Go back and try it again." .
+           "(reCAPTCHA said: " . $resp->error . ")");
+      alert("incorrect reCAPTCHA");
+    } else {
+      alert("recapcha SUCCESS!");
+    }
+  }
+  */
 
   $the_user = wp_authenticate($username, $password);
   $auth = false;
@@ -175,9 +201,6 @@ if (isset($_POST['register'])) {
         exit;
       }
   }
-
-
-
 }
 
 ?>
@@ -216,3 +239,20 @@ if (isset($_POST['register'])) {
     </div><!-- /#content -->
   <?php roots_content_after(); ?>
 <?php get_footer(); ?>
+
+  <?php /*
+  $captcha_public = "6LcaD-4SAAAAAIAldWSXHRLNkGqQvgUGbXUBq0Zd";
+  $capcha_private = "6LcaD-4SAAAAAHmAWf78-Ca_UovSYNVvzQtZVH2z";
+
+  $resp = recaptcha_check_answer ($captcha_private,
+                                  $_SERVER["REMOTE_ADDR"],
+                                  $_POST["recaptcha_challenge_field"],
+                                  $_POST["recaptcha_response_field"]);
+  if (!$resp->is_valid) {
+    // What happens when the CAPTCHA was entered incorrectly
+    die ("The reCAPTCHA wasn't entered correctly. Go back and try it again." .
+         "(reCAPTCHA said: " . $resp->error . ")");
+  } else {
+    console.log("recapcha SUCCESS!");
+  }
+  */ ?>

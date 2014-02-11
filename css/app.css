@@ -4,6 +4,11 @@
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600);
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body { 
   background-color: #232323; /* #0C0E1B; */
   color: #444; 
@@ -823,11 +828,15 @@ a.userblock h3 .avatar {
 
 .imagelist figure img {
   width: 170px;
-  height: 170px;
+  /* height: 170px; */
 }
 
 body.artists footer {
   max-width:768px;
+}
+
+.thumb_img {
+  max-width: 33% !important;
 }
 
 
@@ -1852,12 +1861,32 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
     left: 0;
     box-shadow: 0 0 50px rgba(0,0,0,1);
   }
-
-
 }
 
-@media (min-width: 480px) {
-
-}
 .required, .errorList { color: #CC3333; }
+
+
+
+/*////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+.oc_inputs, .oc_des {
+  margin: 0 1%;
+  width: 45%;
+  position:relative;
+  float:left;
+}
+
+.oc_des .easeditor {
+  height: 130px;
+}
+
+.oc_art_in{
+  margin: 20px 1%;
+}
+
+input.oc_art_input{
+  width: 80%;
+}
 

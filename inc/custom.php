@@ -1256,6 +1256,19 @@ function eas_register_form($redirect = false) {
                 <p>
                   <label for="remember" class="checkbox"><input type="checkbox" name="remember">Remember Me</label>
                 </p>
+
+                <script type="text/javascript"
+                   src="http://www.google.com/recaptcha/api/challenge?k=6LcaD-4SAAAAAIAldWSXHRLNkGqQvgUGbXUBq0Zd">
+                </script>
+                <noscript>
+                   <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LcaD-4SAAAAAIAldWSXHRLNkGqQvgUGbXUBq0Zd"
+                       height="300" width="500" frameborder="0"></iframe><br>
+                   <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+                   </textarea>
+                   <input type="hidden" name="recaptcha_response_field"
+                       value="manual_challenge">
+                </noscript>
+
                 <p>
                   <input type="submit" class="btn btn-primary" value="Register">
                 </p>
@@ -1297,6 +1310,20 @@ function eas_login_form($redirect = false) {
                 <p>
                   <label for="remember" class="checkbox"><input type="checkbox" name="remember">Remember Me</label>
                 </p>
+
+                <!--script type="text/javascript"
+                   src="http://www.google.com/recaptcha/api/challenge?k=6LcaD-4SAAAAAIAldWSXHRLNkGqQvgUGbXUBq0Zd">
+                </script>
+                <noscript>
+                   <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LcaD-4SAAAAAIAldWSXHRLNkGqQvgUGbXUBq0Zd"
+                       height="300" width="500" frameborder="0"></iframe><br>
+                   <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+                   </textarea>
+                   <input type="hidden" name="recaptcha_response_field"
+                       value="manual_challenge">
+                </noscript-->
+
+
                 <p>
                   <input type="submit" class="btn btn-primary" value="Login">
                 </p>
