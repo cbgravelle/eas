@@ -1256,8 +1256,14 @@ function eas_register_form($redirect = false) {
                 <p>
                   <label for="remember" class="checkbox"><input type="checkbox" name="remember">Remember Me</label>
                 </p>
-
-                <script type="text/javascript"
+				
+		<?php
+			require_once('recaptchalib.php');
+  			$publickey = "6LfWge4SAAAAAMQHTPPeFhfUQTMhzKCaBG_KCYP4"; 
+ 			echo recaptcha_get_html($publickey);
+  		?>
+  		
+                <!-- <script type="text/javascript"
                    src="http://www.google.com/recaptcha/api/challenge?k=6LcaD-4SAAAAAIAldWSXHRLNkGqQvgUGbXUBq0Zd">
                 </script>
                 <noscript>
@@ -1267,7 +1273,7 @@ function eas_register_form($redirect = false) {
                    </textarea>
                    <input type="hidden" name="recaptcha_response_field"
                        value="manual_challenge">
-                </noscript>
+                </noscript> -->
 
                 <p>
                   <input type="submit" class="btn btn-primary" value="Register">
@@ -1310,12 +1316,7 @@ function eas_login_form($redirect = false) {
                 <p>
                   <label for="remember" class="checkbox"><input type="checkbox" name="remember">Remember Me</label>
                 </p>
-		
-		<?php
-			require_once('recaptchalib.php');
-  			$publickey = "6LfWge4SAAAAAMQHTPPeFhfUQTMhzKCaBG_KCYP4"; 
- 			echo recaptcha_get_html($publickey);
-  		?>
+
 		
                 <!--script type="text/javascript"
                    src="http://www.google.com/recaptcha/api/challenge?k=6LcaD-4SAAAAAIAldWSXHRLNkGqQvgUGbXUBq0Zd">
