@@ -1238,7 +1238,7 @@ function eas_dndupload($contestname = false) {
 function eas_register_form($redirect = false) {
 
 	?>
-		      <form action="/login<?php eas_redirect_str($redirect); ?>" method="post" autocomplete="off">
+		      <form action="/login<?php eas_redirect_str($redirect); ?>" method="POST" autocomplete="off">
 
                 <input type="hidden" name="register" value="1">
                 <p>
@@ -1256,8 +1256,15 @@ function eas_register_form($redirect = false) {
                 <p>
                   <label for="remember" class="checkbox"><input type="checkbox" name="remember">Remember Me</label>
                 </p>
+                
+                <?php
+                  require_once('recaptchalib.php');
+  				  $publickey = "6LfWge4SAAAAAMQHTPPeFhfUQTMhzKCaBG_KCYP4"; 
+                  echo recaptcha_get_html($publickey);
+                ?>
 
-                <script type="text/javascript"
+               <!--
+ <script type="text/javascript"
                    src="http://www.google.com/recaptcha/api/challenge?k=6LcaD-4SAAAAAIAldWSXHRLNkGqQvgUGbXUBq0Zd">
                 </script>
                 <noscript>
@@ -1268,6 +1275,7 @@ function eas_register_form($redirect = false) {
                    <input type="hidden" name="recaptcha_response_field"
                        value="manual_challenge">
                 </noscript>
+-->
 
                 <p>
                   <input type="submit" class="btn btn-primary" value="Register">
