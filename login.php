@@ -5,7 +5,7 @@ Template Name: Login
 
 /*
 require_once('inc/recaptchalib.php');
-
+*/
 
 if (isset($_GET['action'])) {
   if ($_GET['action'] == 'logout') {
@@ -16,7 +16,7 @@ if (isset($_GET['action'])) {
     exit;
   }
 }
-*/
+
 
 
 
@@ -34,7 +34,21 @@ if (isset($_REQUEST['redirect'])) {
   $redirect = '';
 }
 
+
 if (isset($_POST['register'])) {
+ 
+
+  require_once('inc/recaptchalib.php');
+  $privatekey = "6LfWge4SAAAAACq4gCFHoL1kOXR_krKlzPPFDa_n";
+  $resp = recaptcha_check_answer ($privatekey,
+                                $_SERVER["REMOTE_ADDR"],
+                                $_POST["recaptcha_challenge_field"],
+                                $_POST["recaptcha_response_field"]);
+
+  if (!$resp->is_valid) {
+    // What happens when the CAPTCHA was entered incorrectly
+		$_GET['action'] = $_GET['action'].'badcaptcha';
+  } else {
 
   $email = $_POST['email'];
   $username = $_POST['username'];
@@ -82,34 +96,12 @@ if (isset($_POST['register'])) {
       exit;
     }
   }
+ } //end recaptcha success
+} //end post[register]
 
-} else if (isset($_POST['login'])) {
+  else if (isset($_POST['login'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
-
-  /* from https://developers.google.com/recaptcha/docs/php */
-  /*
-  require_once('recaptchalib.php');
-  $publickey = "6LcaD-4SAAAAAHmAWf78-Ca_UovSYNVvzQtZVH2z";
-  $privatekey = "6LcaD-4SAAAAAHmAWf78-Ca_UovSYNVvzQtZVH2z";
-  $resp = null;
-  $error = null;
-  # was there a reCAPTCHA response?
-  if ($_POST["recaptcha_response_field"]) {
-    $resp = recaptcha_check_answer ($privatekey,
-                                    $_SERVER["REMOTE_ADDR"],
-                                    $_POST["recaptcha_challenge_field"],
-                                    $_POST["recaptcha_response_field"]);
-    if (!$resp->is_valid) {
-      // What happens when the CAPTCHA was entered incorrectly
-      die ("The reCAPTCHA wasn't entered correctly. Go back and try it again." .
-           "(reCAPTCHA said: " . $resp->error . ")");
-      alert("incorrect reCAPTCHA");
-    } else {
-      alert("recapcha SUCCESS!");
-    }
-  }
-  */
 
   $the_user = wp_authenticate($username, $password);
   $auth = false;

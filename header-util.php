@@ -51,6 +51,8 @@
             array_push($message['error'], 'That email address is already in use. Forgot your password?');
           } else if ($action == 'usernameinuse') {
             array_push($message['error'], 'That username is already in use');
+          } else if ($action == 'badcaptcha') {
+            array_push($message['error'], 'Captcha entry incorrect. Please try again.');
           } else if ($action == 'register' && is_user_logged_in()) {
 						$user = wp_get_current_user();
 						eas_send_verification_email($user->ID);
