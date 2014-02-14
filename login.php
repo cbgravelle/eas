@@ -5,7 +5,7 @@ Template Name: Login
 
 /*
 require_once('inc/recaptchalib.php');
-
+*/
 
 if (isset($_GET['action'])) {
   if ($_GET['action'] == 'logout') {
@@ -16,7 +16,7 @@ if (isset($_GET['action'])) {
     exit;
   }
 }
-*/
+
 
 
 

@@ -15,6 +15,12 @@ body {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 2em;
   font-weight: 300;
+  min-width: 700px;
+}
+
+ul {
+  list-style: none;
+  list-style-type: none;
 }
 
 .relative {
@@ -1867,23 +1873,32 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 
 
 
-/*////////////////////////////////////////////////////////////////////////////////////////*/
+/*////////////// OPEN CALL ////////////////*/
 
-
-
-.oc_inputs, .oc_des {
+.oc_userblock {
+  width: auto;
+  background: #f2f2f2;
+  box-shadow: 1px 1px 1px #ddd;
+}
+.oc_inputs, .oc_right {
   margin: 0 1%;
-  width: 45%;
+  width: 48%;
+  min-width: 300px;
   position:relative;
   float:left;
 }
 
-.oc_des .easeditor {
+.oc_right {
+  // margin: 0 0 0 50%;
+}
+.oc_right .easeditor {
   height: 130px;
 }
 
 .oc_art_in{
-  margin: 20px 1%;
+  background: #eee;
+  box-shadow: 1px 1px 3px #999;
+  margin: 0 0 20px 0;
 }
 
 input.oc_art_input{

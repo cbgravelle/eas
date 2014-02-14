@@ -90,7 +90,7 @@ function oc_submissions($page = 0, $per_page = 10, $contest = false, $sort = 're
 
         <div class= "pg">
         Sort by: <?php if(!isset($_GET['sort'])): ?><strong>
-                  <?php else: ?><a class="gray3" href="/artists/"><?php endif; ?>
+                  <?php else: ?><a class="gray3" href="?sort=recent"><?php endif; ?>
                     Recently Updated 
                   <?php if(!isset($_GET['sort'])): ?></strong>
                  <?php else: ?></a><?php endif; ?>
@@ -104,7 +104,6 @@ function oc_submissions($page = 0, $per_page = 10, $contest = false, $sort = 're
         <?php eas_page_links(); ?>
 
           <div id="artists_grid">
-            <?php // oc_recently_updated_artists(get_query_var('paged'), 10, 'opencall'); ?>
             <?php
               if(isset($_GET['sort']) && $_GET['sort'] == 'name') { 
                 oc_submissions(get_query_var('paged'), 10, 'opencall', 'name');

@@ -6,7 +6,7 @@ Template Name: Open Call
 
 <?php 
 
-global $user_id, $alert_message, $contestname, $post_status, $do_it, $errors;
+global $user_ID, $meta, $data, $alert_message, $contestname, $post_status, $do_it, $errors;
 
 $current_user = wp_get_current_user();
 $user_ID = $current_user->ID;
@@ -24,17 +24,18 @@ function con( $data ) {
 }
 
 
-function oc_get_artwork_form($file = true, $action = "/upload", $the_post = false, $the_meta = false, $disabled = false) {
+function oc_get_artwork_form($action = "/upload", $the_post = false, $the_meta = false, $disabled = false) {
 
   global $user_ID, $meta;
 
   get_currentuserinfo();
-
+  $user_ID = get_current_user_id();
   $meta = get_user_meta($user_ID);
   $title = $year = $medium = $credits = $moreinfo = '';
   $elid = "opencall";
   $contestname = "opencall";
-  $first_name = $meta['first_name'][0];
+  $full_name = empty($user_meta['last_name']) ? $meta['first_name'][0] : $meta['first_name'][0].' '.$meta['last_name'][0];
+  $name = $user_meta['nickname'][0] ?: $full_name;
   $last_name = $meta['last_name'][0];
   $school = $_POST['school'] ?: $meta['school'][0];
   $location = $_POST['location'] ?: $meta['location'][0];
@@ -56,36 +57,37 @@ function oc_get_artwork_form($file = true, $action = "/upload", $the_post = fals
 
   $the_return = '<form ';
 
-    if ($file) $the_return.= ' enctype="multipart/form-data"'; 
+    $the_return.= ' enctype="multipart/form-data"'; 
     $the_return .='action="'.$action.'" method="post" id="'.$elid.'">';
-    if ($file) $the_return .=' <div class= "oc_art_in"><input type="file" name="artwork" class="oc_art_input"></div>';
+  
+    $the_return .='<div class="oc_inputs">';
 
-    $the_return .= '<input type="hidden" name="contest" value="'.$contestname.'">
-    <div class="oc_inputs">';
-
-      $nudge = array();
-      foreach (array('school', 'location', 'birthday') as $m) {
-        if (!(isset($meta[$m]) && count($meta[$m]) && !empty($meta[$m][0]))) { 
-          array_push($nudge, $m);
-        }
-      }
-      foreach ($nudge as $n) {
-        $required = $n != 'School' ? ' <span class="required">*</span>' : '';
-        $the_return.='<p><input type="text" name="'.strtolower($n).'" placeholder="Your '.$n.'" value="">'.$required.' </p>';
-      } 
+      // $nudge = array();
+      // foreach (array('school', 'location', 'birthday') as $m) {
+      //   if (!(isset($meta[$m]) && count($meta[$m]) && !empty($meta[$m][0]))) { 
+      //     array_push($nudge, $m);
+      //   }
+      // }
+      // foreach ($nudge as $n) {
+      //   $required = $n != 'School' ? ' <span class="required">*</span>' : '';
+      //   $the_return.='<p><input type="text" name="'.strtolower($n).'" placeholder="Your '.$n.'" value="">'.$required.' </p>';
+      // } 
 
       $the_return .= '
-      <p><input type="text" name="Name" placeholder="Title" value="'.$first_name.' '.$last_name.'"> &nbsp*</p>
-      <p><input type="text" name="school" placeholder="Title" value="'.$school.'"> &nbsp*</p>
-      <p><input type="text" name="location" placeholder="Title" value="'.$location.'"> &nbsp*</p>
-      <p><input type="text" name="birthday" placeholder="Title" value="'.$birthday.'"> &nbsp*</p>
+      <p><input type="text" name="Name" placeholder="Name" value="'.$full_name.'"> &nbsp*</p>
+      <p><input type="text" name="school" placeholder="School" value="'.$school.'"> &nbsp*</p>
+      <p><input type="text" name="location" placeholder="Location" value="'.$location.'"> &nbsp*</p>
+      <p><input type="text" name="birthday" placeholder="Birthday" value="'.$birthday.'"> &nbsp*</p>
       <br/>
       <p><input type="text" name="title" placeholder="Title" value="'.$title.'"> &nbsp*</p>
       <p><input type="text" name="raey" placeholder="Year" value="'.$year.'"> &nbsp*</p>
       <p><input type="text" name="medium" placeholder="Medium" value="'.$medium.'"> &nbsp*</p>
       <p><input type="text" name="size" placeholder="Size" value="'.$size.'"> &nbsp*</p>
     </div>
-    <div class="oc_des">
+
+    <div class="oc_right">';
+      $the_return .=' <div class= "oc_art_in"><input type="file" name="artwork" class="oc_art_input"></div>';
+      $the_return .= '<input type="hidden" name="contest" value="'.$contestname.'">
       <p>Brief Description</p>'.eas_get_editor($moreinfo, 'moreinfo', 'more_info', true, '150px').'</p>
     </div>';
 
