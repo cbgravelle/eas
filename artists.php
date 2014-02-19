@@ -46,10 +46,7 @@ Template Name: Artists
         </div>
 
         <?php eas_page_links(); ?>
-        <?php eas_display_cc_general(); ?>
-
         
-
       </div><!-- /#main -->
     <?php roots_main_after(); ?>
     </div><!-- /#content -->

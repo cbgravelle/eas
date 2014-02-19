@@ -83,9 +83,6 @@ if (isset($_POST['updateprofile']) && $_POST['updateprofile'] == 1) {
               eas_editor($current_usermeta['description'][0], 'description', 'description')
               ?>
             </p>
-            <?php if (count(eas_artworks_by_user($user_ID))) { 
-              eas_cc_settings('Default Creative Commons License');
-             } ?>
             <p>
               <input type="submit" class="btn btn-primary" value="Save Settings">
             </p>

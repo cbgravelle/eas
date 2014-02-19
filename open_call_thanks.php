@@ -7,9 +7,9 @@ Template Name: Open Call Thanks
 <?php 
 
 
-  /*///////// GETTING SUBMISSIONS /////////*/
+/*///////// GETTING SUBMISSIONS /////////*/
 
-
+/*
 function oc_display_user($li, $contest = false) {
   $id = get_current_user_id();
   $this_author = get_userdata($id);
@@ -57,8 +57,10 @@ function oc_display_user($li, $contest = false) {
   return $the_return;
 }
 
+/*
 function eas_get_meta_display($meta, $key, $display_key = true) {
-    if (isset($meta[$key]) && !empty($meta[$key][0])) {
+
+  if (isset($meta[$key]) && !empty($meta[$key][0])) {
     if ($key == 'location') {
       $label = 'Location:&nbsp&nbsp';
       $text = $meta[$key][0];
@@ -88,12 +90,10 @@ function eas_get_meta_display($meta, $key, $display_key = true) {
     }
       $the_return.='<div class="artistmetaval inline">'.$text.'</div>';
   }
-
   $the_return .= '</div>';
 
   return $the_return;
-}
-
+} */
 ?>
 
 <?php get_header(); ?>
@@ -104,13 +104,8 @@ function eas_get_meta_display($meta, $key, $display_key = true) {
         <?php roots_loop_before(); ?>
         <?php get_template_part('loop','page'); ?>
         <?php roots_loop_after(); ?>
-
-          <!--div id="artists_grid"-->
-            <?php
-            echo oc_display_user(true, 'opencall');
-            ?>
-            <br class="clear" />
-          <!--/div-->
+        <?php echo oc_display_user(get_current_user_id(), true, 'opencall'); ?>
+        <br class="clear" />
         <?php /*
         } else {
           echo 'not logged in';

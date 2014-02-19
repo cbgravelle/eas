@@ -70,7 +70,7 @@ function oc_submissions($page = 0, $per_page = 10, $contest = false, $sort = 're
           ", $per_page, ($page-1)*$per_page);
       $author_ids = $wpdb->get_results($query);
       foreach ($author_ids as $author) {
-        eas_display_user($author->ID, true, $contestname);
+        echo oc_display_user($author->ID, true, $contestname);
       }
 }
 

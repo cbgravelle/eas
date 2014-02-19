@@ -46,15 +46,6 @@ function oc_get_artwork_form($action = "/upload", $the_post = false, $the_meta =
   $size = $_POST['size'];
   $moreinfo = $_POST['more_info'];
 
-  /* if ($the_post !== false) {
-    $meta = get_post_meta($the_post->ID);
-    $title = $the_post['post_title'];
-    $year = $meta['year'];
-    $medium = $meta['medium'];
-    $credits = $meta['credits'];
-    $moreinfo = get_the_content($the_post->ID);
-  } */
-
   $the_return = '<form ';
 
     $the_return.= ' enctype="multipart/form-data"'; 
@@ -62,23 +53,19 @@ function oc_get_artwork_form($action = "/upload", $the_post = false, $the_meta =
   
     $the_return .='<div class="oc_inputs">';
 
-      // $nudge = array();
-      // foreach (array('school', 'location', 'birthday') as $m) {
-      //   if (!(isset($meta[$m]) && count($meta[$m]) && !empty($meta[$m][0]))) { 
-      //     array_push($nudge, $m);
-      //   }
-      // }
-      // foreach ($nudge as $n) {
-      //   $required = $n != 'School' ? ' <span class="required">*</span>' : '';
-      //   $the_return.='<p><input type="text" name="'.strtolower($n).'" placeholder="Your '.$n.'" value="">'.$required.' </p>';
-      // } 
+      $nudge = array();
+      foreach (array('School', 'Location', 'Birthday') as $m) {
+        if (!(isset($meta[strtolower($m)]) && count($meta[strtolower($m)])) && !empty($meta[strtolower($m)][0])) { 
+          $required = $n != 'School' ? ' <span class="required">*</span>' : '';
+          $the_return.='<p><input type="text" name="'.strtolower($m).'" placeholder="'.$m.'" value="">'.$required.' </p>';
+        } 
+      }
 
+      // <p><input type="text" name="name" placeholder="Name" value="'.$full_name.'"> &nbsp*</p>
+      // <p><input type="text" name="school" placeholder="School" value="'.$school.'"> &nbsp*</p>
+      // <p><input type="text" name="location" placeholder="Location" value="'.$location.'"> &nbsp*</p>
+      // <p><input type="text" name="birthday" placeholder="Birthday" value="'.$birthday.'"> &nbsp*</p>
       $the_return .= '
-      <p><input type="text" name="Name" placeholder="Name" value="'.$full_name.'"> &nbsp*</p>
-      <p><input type="text" name="school" placeholder="School" value="'.$school.'"> &nbsp*</p>
-      <p><input type="text" name="location" placeholder="Location" value="'.$location.'"> &nbsp*</p>
-      <p><input type="text" name="birthday" placeholder="Birthday" value="'.$birthday.'"> &nbsp*</p>
-      <br/>
       <p><input type="text" name="title" placeholder="Title" value="'.$title.'"> &nbsp*</p>
       <p><input type="text" name="raey" placeholder="Year" value="'.$year.'"> &nbsp*</p>
       <p><input type="text" name="medium" placeholder="Medium" value="'.$medium.'"> &nbsp*</p>
@@ -112,11 +99,6 @@ if (isset($_FILES['artwork'])) {
   require_once(ABSPATH.'/wp-admin/includes/media.php'); 
 
   $do_it = true;
-
-  /* if (empty($birthday) && empty($school)) {
-      $do_it = false;
-      $_GET['action'] = 'noage';
-  } */
 
   /*///////// FORM ERROR CHECKING ////////////*/
 
@@ -174,8 +156,8 @@ if (isset($_FILES['artwork'])) {
         $redirect_url = '/'.$contestname.'/thanks';
 
   			// mail
-  			// eas_mail('info@emergentartspace.org', 'Artwork has been submitted', eas_artwork_url($artwork_id));
-        eas_mail('cbgravelle@gmail.com', 'Artwork has been submitted', eas_artwork_url($artwork_id));
+  			eas_mail('info@emergentartspace.org', 'Artwork has been submitted to Open Call', eas_artwork_url($artwork_id));
+        // eas_mail('cbgravelle@gmail.com', 'Artwork has been submitted', eas_artwork_url($artwork_id));
 
         wp_redirect($redirect_url);
         exit;

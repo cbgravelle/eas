@@ -612,7 +612,7 @@ function eas_display_cc_general($post_id = 0, $text = true) {
 }
 
 
-function eas_get_cc_general($post_id = 0, $text = true) {
+function eas_get_cc_general($text = true) {
   
   $ccstr = 'by-nc-nd';
   $the_return = '<div class="cclicense">
@@ -3526,5 +3526,59 @@ function my_save_extra_profile_fields( $user_id ) {
 		add_user_meta($user_id, 'verified', '1');
 	}
 
+}
+
+function oc_display_user($id, $li, $contest = 'opencall') {
+  $this_author = get_userdata($id);
+  $artworks = eas_artworks_by_user($id, 6, $contest);
+  $meta = get_user_meta($id);
+
+  if ($contest !== false) {
+    $linkurl = trailingslashit(get_bloginfo('siteurl')).$contest.'/submissions/'.$id;
+  } else {
+    $linkurl = eas_artist_page_url($id);
+  }
+
+  $the_return = '';
+  
+  $the_return.='
+    <li>
+      <a class="oc_userblock" href="'.$linkurl.'">
+        <h3>
+        <span class="nickname">'.$this_author->nickname.'</span>
+          '.eas_get_follow_button($id, true);
+        if (!eas_is_artist($id) and eas_user_is_admin() and $contest === false) {
+          $the_return.= eas_get_approve_artist_button($id);
+          $the_return.= eas_get_decline_artist_button($id);
+        }
+        $the_return.='</h3>
+        <span class="usermeta">
+          '.eas_get_meta_display($meta, 'location', false).'
+        </span>
+        <span class="usermeta">'.eas_get_birthday_display_for_admins($id).'</span>
+        <span class="usermeta">
+          '.eas_get_email_display_for_admins($id).'
+        </span>
+    </a>
+      <div class="imagelist row">
+  ';
+
+    foreach ($artworks as $a) {
+
+      $img = eas_artwork_img($a->ID, 'span2-crop');
+      $src = $img[0];
+
+      $the_return.='
+        <a href="'.eas_artwork_url($a->ID).'">
+          <figure class="span2"><img src="'.$src.'">
+          </figure>
+        </a>
+      ';
+    }
+
+  $the_return.='</div>';
+
+   /*if ($li) $the_return = '<li>'.$the_return.'</li>';*/
+   return $the_return;
 }
 
