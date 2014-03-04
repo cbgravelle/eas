@@ -1456,18 +1456,11 @@ footer p {
   color: #999;
 }
 
-footer > .creative_commons {
-  text-align: left;
-  float: left;
-  margin-right: 30px;
-  font-size: 12px;
-  color: #999;
-}
 footer .cclicense {
   text-align: left;
   float: left;
-  margin-right: 30px;
-  font-size: 12px;
+  margin-right: 10px;
+  font-size: 11px;
   color: #999;
 }
 footer a, footer a:hover {

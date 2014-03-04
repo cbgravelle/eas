@@ -2448,7 +2448,8 @@ function eas_user_is_owner() {
 	global $user_ID;
 
 	get_currentuserinfo();
-	return true; //eas_user_is_admin() || $user_ID == intval($post->post_author);
+	return eas_user_is_admin() || $user_ID == intval($post->post_author);
+  // return true; doesn't fix author draft view problem - March'14 CG
 }
 
 function eas_cb_show_works() {
