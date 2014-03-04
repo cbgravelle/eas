@@ -19,7 +19,7 @@ function oc_submissions($page = 0, $per_page = 10, $sort = 'recent') {
       on p.ID = pm.post_id
       and pm.meta_key = 'contest'
       and pm.meta_value = %s
-      where p.post_status = 'private' 
+      where p.post_status = 'draft' 
       ", $contestname
     );
 

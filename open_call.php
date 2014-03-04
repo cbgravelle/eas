@@ -13,7 +13,7 @@ $user_ID = $current_user->ID;
 $user_meta = get_user_meta($user_ID);
 $alert_message = "";
 $contestname = 'opencall';
-$post_status = 'private';
+$post_status = 'draft';
 $do_it = false;
 
 function con( $data ) {
