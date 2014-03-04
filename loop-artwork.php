@@ -1,5 +1,10 @@
 
 <?php /* Start loop */ ?>
+
+<?php global $wp_query;
+$args = array_merge( $wp_query->query, array( 'post_status' => array('publish', 'draft') ) );
+query_posts( $args ); ?>
+
 <?php while (have_posts()) : the_post(); ?>
   <?php roots_post_before(); ?>
     <?php
@@ -17,11 +22,13 @@
 
       $juror = eas_user_is_juror();
 
-      if ($contest) {
-               $linkurl = trailingslashit(get_bloginfo('siteurl')).'crossingborders/submissions/'.$author_id;
-
+      if ($contest == 'crossingborders') {
+        $linkurl = trailingslashit(get_bloginfo('siteurl')).'crossingborders/submissions/'.$author_id;
+      } else if ($contest == 'opencall') {
+        // $linkurl = trailingslashit(get_bloginfo('siteurl')).'opencall/submissions/'.$author_id;
+        $linkurl = eas_artist_page_url($author_id);
       } else {
-         $linkurl = eas_artist_page_url($author_id);
+        $linkurl = eas_artist_page_url($author_id);
       }
 
     ?>
@@ -125,3 +132,4 @@
   <?php roots_post_after(); ?>
 <?php endwhile; /* End loop */ ?>
 <?php /* eas_display_cc(); */ ?>
+

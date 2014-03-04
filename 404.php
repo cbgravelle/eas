@@ -27,5 +27,10 @@ error_log('404 - user '.$user_ID.', url: '.$request.', referer: '.$referer);
     <?php roots_main_after(); ?>
     </div><!-- /#content -->
   <?php roots_content_after(); ?>
-  <?php /* if (eas_user_is_admin()) _d($wp_query); */ ?>
+  <?php  
+  // if (eas_user_is_admin()) {
+    _d($wp_query); 
+    echo "<script type='text/javascript'>console.log('DEBUG: ".$wp_query."'');</script>";
+  // }
+  ?>
 <?php get_footer(); ?>

@@ -6,21 +6,10 @@ Template Name: Open Call Submissions
 
 <?php 
 
-  /*////////////// PASSWORD ///////////////*/
-
-  /*///////// GETTING SUBMISSIONS /////////*/
-
-function oc_get_subs() {
-  return "submissions go here";
-}
-
-function oc_submissions($page = 0, $per_page = 10, $contest = false, $sort = 'recent') {
+function oc_submissions($page = 0, $per_page = 10, $sort = 'recent') {
   global $wpdb;
-  $contestname = false;
-  if ($contest !== false) {
-    $contestname = $contest;
-    $contest = true;
-  } 
+  $contest = true;
+  $contestname = 'opencall';
   if ($page == 0) $page = 1;
   $contest_query = '';
   if ($contest) {
@@ -30,7 +19,7 @@ function oc_submissions($page = 0, $per_page = 10, $contest = false, $sort = 're
       on p.ID = pm.post_id
       and pm.meta_key = 'contest'
       and pm.meta_value = %s
-      where p.post_status = 'draft' 
+      where p.post_status = 'private' 
       ", $contestname
     );
 
@@ -85,9 +74,6 @@ function oc_submissions($page = 0, $per_page = 10, $contest = false, $sort = 're
         <?php get_template_part('loop','page'); ?>
         <?php roots_loop_after(); ?>
 
-        <?php /*if (is_user_logged_in()) { 
-          echo "test echo";  */?>
-
         <div class= "pg">
         Sort by: <?php if(!isset($_GET['sort'])): ?><strong>
                   <?php else: ?><a class="gray3" href="?sort=recent"><?php endif; ?>
@@ -101,25 +87,20 @@ function oc_submissions($page = 0, $per_page = 10, $contest = false, $sort = 're
                     <?php if(isset($_GET['sort']) && $_GET['sort'] == 'name'): ?></strong>
                   <?php else: ?></a><?php endif; ?>
         </div>
-        <?php eas_page_links(); ?>
+        <?php eas_page_links('opencall/submissions'); ?>
 
           <div id="artists_grid">
             <?php
               if(isset($_GET['sort']) && $_GET['sort'] == 'name') { 
-                oc_submissions(get_query_var('paged'), 10, 'opencall', 'name');
+                oc_submissions(get_query_var('paged'), 10, 'name');
               } else { 
-                oc_submissions(get_query_var('paged'), 10, 'opencall', 'recent');
+                oc_submissions(get_query_var('paged'), 10, 'recent');
               }
             ?>
             <br class="clear" />
           </div>
-        <?php /*
-        } else {
-          echo 'not logged in';
-        }  */?>
 
-        <?php eas_page_links(); ?>
-
+        <?php eas_page_links('opencall/submissions'); ?>
 
       </div><!-- /#main -->
     <?php roots_main_after(); ?>

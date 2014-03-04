@@ -38,10 +38,10 @@ li {
   position: absolute;
 }
 
-.main, .row{
-  max-width: 768px;
-  margin-left: auto;
-  margin-right: auto;
+#main{
+  // max-width: 768px;
+  // margin-left: 20px;
+  // margin-right: 20px;
 }
 
 .gray3 {
@@ -85,6 +85,10 @@ h1, h2 {
 
 h3, h4, h5 {
   font-weight: 400;
+}
+
+h3 .btn {
+  margin-left: 10px;
 }
 
 strong, b {
@@ -926,7 +930,7 @@ div.page-header a.btn {
   font-size: 16px;
 }
 
-div#eas_forum_page_nums, ul.forum li article {
+#eas_forum_page_nums, ul.forum li article {
     margin-left: auto;
     margin-right: auto;
     max-width: 768px;
@@ -1896,6 +1900,16 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
   min-width: 300px;
   position:relative;
   float:left;
+}
+
+
+body.page-template-open_call_submissions-php #eas_forum_page_nums,
+body.page-template-open_call_submissions-php .row,
+body.page-template-open_call_thanks-php .row,
+body.page-template-open_call-php .main{
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .oc_right {

@@ -13,7 +13,7 @@ $user_ID = $current_user->ID;
 $user_meta = get_user_meta($user_ID);
 $alert_message = "";
 $contestname = 'opencall';
-$post_status = 'draft';
+$post_status = 'private';
 $do_it = false;
 
 function con( $data ) {
@@ -61,15 +61,11 @@ function oc_get_artwork_form($action = "/upload", $the_post = false, $the_meta =
         } 
       }
 
-      // <p><input type="text" name="name" placeholder="Name" value="'.$full_name.'"> &nbsp*</p>
-      // <p><input type="text" name="school" placeholder="School" value="'.$school.'"> &nbsp*</p>
-      // <p><input type="text" name="location" placeholder="Location" value="'.$location.'"> &nbsp*</p>
-      // <p><input type="text" name="birthday" placeholder="Birthday" value="'.$birthday.'"> &nbsp*</p>
       $the_return .= '
-      <p><input type="text" name="title" placeholder="Title" value="'.$title.'"> &nbsp*</p>
-      <p><input type="text" name="raey" placeholder="Year" value="'.$year.'"> &nbsp*</p>
-      <p><input type="text" name="medium" placeholder="Medium" value="'.$medium.'"> &nbsp*</p>
-      <p><input type="text" name="size" placeholder="Size" value="'.$size.'"> &nbsp*</p>
+      <p><input type="text" name="title" placeholder="Title" value="'.$title.'"></p>
+      <p><input type="text" name="raey" placeholder="Year" value="'.$year.'"></p>
+      <p><input type="text" name="medium" placeholder="Medium" value="'.$medium.'"></p>
+      <p><input type="text" name="size" placeholder="Size" value="'.$size.'"></p>
     </div>
 
     <div class="oc_right">';
@@ -122,7 +118,7 @@ if (isset($_FILES['artwork'])) {
   if(!isset($_POST['more_info']) || empty($_POST['more_info'])) {
     $errors[] = "Description cannot be blank.";
   }
-  if (sizeof($errors) > 1) {
+  if (sizeof($errors) > 0) {
     $do_it = false;
   }
 
@@ -153,11 +149,9 @@ if (isset($_FILES['artwork'])) {
         update_post_meta($artwork_id, 'size', $_POST['size']);
         update_post_meta($artwork_id, 'contest', 'opencall');
           
-        $redirect_url = '/'.$contestname.'/thanks';
+        $redirect_url = '/opencall/thanks';
 
-  			// mail
   			eas_mail('info@emergentartspace.org', 'Artwork has been submitted to Open Call', eas_artwork_url($artwork_id));
-        // eas_mail('cbgravelle@gmail.com', 'Artwork has been submitted', eas_artwork_url($artwork_id));
 
         wp_redirect($redirect_url);
         exit;
@@ -190,8 +184,6 @@ if (isset($_FILES['artwork'])) {
         } else {
           eas_not_logged_in();
         } ?>
-
-        <?php con("test"); ?>
 
       </div><!-- /#main -->
     <?php roots_main_after(); ?>

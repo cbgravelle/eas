@@ -62,7 +62,7 @@
           } else if ($action == 'unfeature') {
             array_push($message['info'], 'This post is no longer featured.');
           } else if ($action == 'notartist') {
-            $msg = 'After you have uploaded your art, your account must be approved.';
+            // $msg = 'After you have uploaded your art, your account must be approved.';
             if (!eas_user_verified()) {
               $msg .= '<p>Please ensure your email address is valid in <a href="/settings/email" title="Email Settings">your settings</a> so we can send you a confirmation email.';
             }

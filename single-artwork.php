@@ -40,6 +40,7 @@ if (eas_user_is_owner() && isset($_POST['ID']) && intval($_POST['ID']) == $post-
 if ($wp_query->query_vars['addfav'] == '1') {
   $fav = eas_add_favorite();
   $action = 'addfav';
+
   if (!is_bool($fav)) {
     $action = 'addfav';
   } else if (!is_user_logged_in())  {
@@ -54,7 +55,7 @@ if ($wp_query->query_vars['addfav'] == '1') {
   } else {
       wp_redirect(eas_artwork_url($post->ID).'?action='.$action);
   }
-      exit;
+  exit;
 
 
 } else if ($wp_query->query_vars['removefav'] == '1') {
@@ -76,30 +77,28 @@ if ($wp_query->query_vars['addfav'] == '1') {
   exit;
 }
 
-  if ($wp_query->query_vars['delete'] == 1) {
-    $the_post = wp_update_post(array('ID' => $post->ID, 'post_status' => 'trash'), false);
-    if ($the_post !== 0) {
-      wp_redirect('/artists?action=delete');
-      exit();
+if ($wp_query->query_vars['delete'] == 1) {
+  $the_post = wp_update_post(array('ID' => $post->ID, 'post_status' => 'trash'), false);
+  if ($the_post !== 0) {
+    wp_redirect('/artists?action=delete');
+    exit();
+  } else {
+    _d('failed to delete');
+  }
+}
+
+
+if (isset($_REQUEST["winner"])) {
+    if ($_REQUEST["winner"] == 1) {
+      $winval = 1;
+      $result = eas_update_meta($post->ID, "winner", $winval);
     } else {
-      _d('failed to delete');
+      $winval = 0;
+      $result = delete_metadata('post', $post->ID, 'winner');
     }
-  }
-
-
-  if (isset($_REQUEST["winner"])) {
-      if ($_REQUEST["winner"] == 1) {
-        $winval = 1;
-        $result = eas_update_meta($post->ID, "winner", $winval);
-      } else {
-        $winval = 0;
-        $result = delete_metadata('post', $post->ID, 'winner');
-      }
-        echo json_encode(array('val' => $winval, 'result' => $result));
-        exit;
-  }
-
-
+    echo json_encode(array('val' => $winval, 'result' => $result));
+    exit;
+}
 
 ?>
 <?php get_header(); ?>
@@ -109,6 +108,9 @@ if ($wp_query->query_vars['addfav'] == '1') {
       <div id="main" class="<?php echo FULLWIDTH_CLASSES; ?>" role="main">
         
         <?php roots_loop_before(); ?>
+
+        <?php echo "<script type='text/javascript'>console.log('DEBUG: ".$author_id."');</script>"; ?>
+
         <?php get_template_part('loop', 'artwork'); ?>
         <?php roots_loop_after(); ?>
 

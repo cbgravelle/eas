@@ -168,7 +168,7 @@ if (!eas_is_artist() && !$contestform) {
 				</ul>
 				<?php endif; ?>
         <?php if (is_user_logged_in()) { 
-          eas_artwork_form(true, '/upload/basic', 'upload_art', false, false, false, $contestname, $contestform);
+          eas_artwork_form(true, '/upload', 'upload_art', false, false, false, $contestname, $contestform);
          } else {
           eas_not_logged_in();
          } ?>

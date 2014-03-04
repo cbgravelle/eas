@@ -1107,8 +1107,11 @@ function eas_artworks_by_user($id, $perpage = -1, $contest = false) {
 		$args['meta_key'] = 'contest';
 		$args['meta_value'] = $contest;
 		$args['post_status'] = 'draft';
+    if ($contest == 'opencall') {
+      $args['post_status'] = 'draft';
+    } 
 	}
-    return get_posts($args);
+  return get_posts($args);
 }
 
 function eas_artist_page_url($id) {
@@ -1148,7 +1151,7 @@ function eas_dndupload($contestname = false) {
 			$contest_query = '?contestname='.$contestname;
 		} 
 		
-		$the_return = '<p>If you\'re having problems with this page you can try our <a href="/upload/basic'.$contest_query.'" title="Basic Uploader">basic uploader</a>.</p>';
+		$the_return = '<p>If you\'re having problems with this page you can try our <a href="/upload'.$contest_query.'" title="Basic Uploader">basic uploader</a>.</p>';
 
 		$show_it = true;
 		if ($is_contest) {
@@ -2365,8 +2368,6 @@ function eas_recently_viewed_works($id = 0, $all = false, $perpage = 10, $paged 
 		limit %d, %d
 	", (($paged-1)*$perpage), $perpage);
 	return $wpdb->get_col($query);
-
-	
 }
 
 function eas_get_favorite_button($id = 0) {
@@ -2447,7 +2448,7 @@ function eas_user_is_owner() {
 	global $user_ID;
 
 	get_currentuserinfo();
-	return eas_user_is_admin() || $user_ID == intval($post->post_author);
+	return true; //eas_user_is_admin() || $user_ID == intval($post->post_author);
 }
 
 function eas_cb_show_works() {
@@ -2656,9 +2657,9 @@ function eas_process_content($content, $dress = false) {
 	if ($dress) return $content;
 }
 
-function eas_page_links() {	
+function eas_page_links($pagename = "0") {	
 	$paged = get_query_var('paged');
-	$pagename = get_query_var('pagename');
+	$pagename = $pagename == "0" ? get_query_var('pagename') : $pagename;
 	if(!$pagename)
 		$pagename = get_query_var('post_type'); 
 	$perpage = 10;
@@ -2672,6 +2673,12 @@ function eas_page_links() {
 				$sql = "select count(distinct u.ID) from wp_users u join wp_usermeta um ON um.user_id = u.ID join ( select p.* from wp_posts p join wp_postmeta pm on p.ID = pm.post_id and pm.meta_key = 'contest' and pm.meta_value = 'crossingborders' where p.post_status = 'draft' and p.post_type = 'artwork' order by p.post_date desc ) as a on u.ID = a.post_author where um.meta_key = 'nickname'";
 				$epl_total = ceil($wpdb->get_var($sql)/$perpage);
 			break;
+
+      case 'opencall/submissions':
+        global $wpdb;
+        $sql = "select count(distinct u.ID) from wp_users u join wp_usermeta um ON um.user_id = u.ID join ( select p.* from wp_posts p join wp_postmeta pm on p.ID = pm.post_id and pm.meta_key = 'contest' and pm.meta_value = 'opencall' where p.post_status = 'draft' and p.post_type = 'artwork' order by p.post_date desc ) as a on u.ID = a.post_author where um.meta_key = 'nickname'";
+        $epl_total = ceil($wpdb->get_var($sql)/$perpage);
+      break;
 
 			case 'approve':
 				global $wpdb;
@@ -3528,10 +3535,15 @@ function my_save_extra_profile_fields( $user_id ) {
 
 }
 
-function oc_display_user($id, $li, $contest = 'opencall') {
+function oc_display_user($id, $li, $contest = 'opencall', $redir = 'opencall') {
   $this_author = get_userdata($id);
   $artworks = eas_artworks_by_user($id, 6, $contest);
   $meta = get_user_meta($id);
+
+  get_currentuserinfo();
+  if(!is_user_logged_in()) {
+    wp_redirect('login?redirect=/'+$redir);
+  }
 
   if ($contest !== false) {
     $linkurl = trailingslashit(get_bloginfo('siteurl')).$contest.'/submissions/'.$id;
@@ -3542,7 +3554,7 @@ function oc_display_user($id, $li, $contest = 'opencall') {
   $the_return = '';
   
   $the_return.='
-    <li>
+    <div class="row">
       <a class="oc_userblock" href="'.$linkurl.'">
         <h3>
         <span class="nickname">'.$this_author->nickname.'</span>
@@ -3559,8 +3571,8 @@ function oc_display_user($id, $li, $contest = 'opencall') {
         <span class="usermeta">
           '.eas_get_email_display_for_admins($id).'
         </span>
-    </a>
-      <div class="imagelist row">
+      </a>
+      <div class="imagelist">
   ';
 
     foreach ($artworks as $a) {
@@ -3576,9 +3588,7 @@ function oc_display_user($id, $li, $contest = 'opencall') {
       ';
     }
 
-  $the_return.='</div>';
+  $the_return.='</div></div>' /* .row and .imagelist */;
 
-   /*if ($li) $the_return = '<li>'.$the_return.'</li>';*/
-   return $the_return;
+  return $the_return;
 }
-
